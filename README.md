@@ -2,6 +2,20 @@
 
 ## How to run
 
+### With Script
+
+To run the program with ease, run the script ``run.ps1`` with PowerShell.
+
+In the root directory write:
+
+> ``./run.ps1``
+
+This will open two separate terminals; one for the server, one for the client.
+
+### Manually
+
+To run the program manually do the following:
+
 First start the server in the server directory ``./server`` with:
 
 > ``go run .``
