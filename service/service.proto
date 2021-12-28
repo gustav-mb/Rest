@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+option go_package = "./service";
+
+import "google/protobuf/any.proto";
+
+package service;
+
+// Compile proto-file with:
+// protoc -I="." --go_out="." service/service.proto
+// protoc --go-grpc_out="." service/service.proto
+
+message Student {
+  int64 id = 1;
+  string name = 2;
+  string enrollment = 3;
+  float courseWorkload = 4;
+}
+
+message Teacher {
+  int64 id = 1;
+  string name = 2;
+  float rating = 3;
+}
+
+message Course {
+  int64 id = 1;
+  string name = 2;
+  Teacher teacher = 3;
+  float score = 4;
+}
+
+message GetRequest {
+  int64 id = 1;
+  string name = 2;
+}
+
+// A GetResponse can contain any data e.g., a Course, Student...
+message GetResponse {
+  repeated google.protobuf.Any content = 1;
+}
+
+message Response {
+  google.protobuf.Any object = 1;
+  ResponseCode code = 2;
+}
+
+message DeleteRequest {
+  int64 id = 1;
+}
+
+enum ResponseCode {
+  UNKNOWN = 0;
+  OK = 1;
+  BAD_REQUEST = 2;
+  NOT_FOUND = 3;
+  CREATED = 4;
+}
+
+service Service {
+  rpc CreateStudent (Student) returns (Response);
+  rpc CreateTeacher (Teacher) returns (Response);
+  rpc CreateCourse (Course) returns (Response);
+
+  rpc GetStudents (GetRequest) returns (GetResponse);
+  rpc GetTeachers (GetRequest) returns (GetResponse);
+  rpc GetCourses (GetRequest) returns (GetResponse);
+
+  rpc UpdateStudent (Student) returns (Response);
+  rpc UpdateTeacher (Teacher) returns (Response);
+  rpc UpdateCourse (Course) returns (Response);
+
+  rpc DeleteStudent (DeleteRequest) returns (Response);
+  rpc DeleteTeacher (DeleteRequest) returns (Response);
+  rpc DeleteCourse (DeleteRequest) returns (Response);
+}
