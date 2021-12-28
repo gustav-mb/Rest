@@ -12,7 +12,7 @@ import (
 
 type Server struct {
 	ipAddress *net.TCPAddr
-	router *gin.Engine
+	router    *gin.Engine
 }
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 func (s *Server) Init() {
 	// Test
 	s.router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"data": "hello world"})
+		c.String(http.StatusOK, "Hello world")
 	})
 
 	// Students
@@ -62,13 +62,13 @@ func (s *Server) Init() {
 }
 
 func NewServer(address string, port int) *Server {
-	ipAddress, err := net.ResolveTCPAddr("tcp", address + ":" + strconv.Itoa(port))
+	ipAddress, err := net.ResolveTCPAddr("tcp", address+":"+strconv.Itoa(port))
 	if err != nil {
 		log.Fatalf("Could not resolve ip address %v:%v :: %v", address, port, err)
 	}
 
 	return &Server{
 		ipAddress: ipAddress,
-		router: gin.New(),
+		router:    gin.New(),
 	}
 }
