@@ -69,6 +69,6 @@ func NewServer(address string, port int) *Server {
 
 	return &Server{
 		ipAddress: ipAddress,
-		router:    gin.New(),
+		router:    gin.Default(),
 	}
 }
